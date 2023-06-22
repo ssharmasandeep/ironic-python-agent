@@ -844,24 +844,25 @@ class StandbyExtension(base.BaseAgentExtension):
             else:
                 self._cache_and_write_image(image_info, device, configdrive)
 
-        _validate_partitioning(device)
+        # FIXME:Sandeep
+        # _validate_partitioning(device)
 
         # For partition images the configdrive creation is taken care by
         # partition_utils.work_on_disk(), invoked from either
         # _write_partition_image or _cache_and_write_image above.
         # Handle whole disk images explicitly now.
-        if image_info.get('image_type') != 'partition':
-            if configdrive is not None:
+        #if image_info.get('image_type') != 'partition':
+        #    if configdrive is not None:
                 # Will use dummy value of 'local' for 'node_uuid',
                 # if it is not available. This is to handle scenario
                 # wherein new IPA is being used with older version
                 # of Ironic that did not pass 'node_uuid' in 'image_info'
-                node_uuid = image_info.get('node_uuid', 'local')
-                partition_utils.create_config_drive_partition(node_uuid,
-                                                              device,
-                                                              configdrive)
+         #       node_uuid = image_info.get('node_uuid', 'local')
+         #       partition_utils.create_config_drive_partition(node_uuid,
+         #                                                     device,
+         #                                                    configdrive)
 
-        self._fix_up_partition_uuids(image_info, device)
+        # self._fix_up_partition_uuids(image_info, device)
         msg = 'image ({}) written to device {} '
         result_msg = _message_format(msg, image_info, device,
                                      self.partition_uuids)
